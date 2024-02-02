@@ -12,7 +12,7 @@ export async function sendEmail(formData: FormData) {
         pass: "udpiiemxvtkupnwb",
       },
     });
-    const mailOptions = {
+    const mailOptions:any = {
       from:formData.get("email") ,
       to:"auxload.official@gmail.com",
       subject: `Mesaj de la ${formData.get("email")}`,
