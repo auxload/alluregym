@@ -27,7 +27,7 @@ export const Abonamente = () => {
           </CardHeader>
           <CardContent>
             <CardDescription className="text-4xl  text-primary">
-              75 Lei
+              80 Lei
             </CardDescription>
 
             <ul className="mt-6">
@@ -93,7 +93,7 @@ export const Abonamente = () => {
           </CardHeader>
           <CardContent>
             <CardDescription className="text-4xl  text-primary">
-              1000 Lei
+              1400 Lei
             </CardDescription>
 
             <ul className="mt-6">
