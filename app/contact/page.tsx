@@ -8,8 +8,8 @@ import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 const page = () => {
   return (
     <section
-      
-      className="container  min-h-[100vh]  w-full grid md:grid-cols-2   md:justify-center items-center"
+      id="abonamente"
+      className="container  min-h-screen w-full grid md:grid-cols-2   md:justify-center items-center"
     >
       <div className=" w-full h-full grid place-content-center mb-16">
         <h1 className="text-5xl">Contacteaza-ne</h1>
