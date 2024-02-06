@@ -39,6 +39,7 @@ export function Contact() {
   });
   async function onSubmit(data: any) {
     await sendEmail(objectToFormData(data));
+    form.reset()
   }
   function objectToFormData(obj: any) {
     const formData = new FormData();
@@ -111,7 +112,7 @@ export function Contact() {
           )}
         />
         <Button disabled={form.formState.isSubmitting} type="submit" className=" items-start w-fit">
-          {(form.formState.isSubmitting) ? "Loading..." : "Submit"}
+          {(form.formState.isSubmitting) ? "In curs de trimitere..." : "Submit"}
         </Button>
       </form>
     </Form>
