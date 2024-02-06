@@ -1,5 +1,18 @@
 "use server";
 import nodemailer from "nodemailer";
+import { FormEventHandler } from "react";
+
+
+export const delay = () => {
+  return new Promise<void>((resolveOuter) => {
+    resolveOuter(
+      new Promise((resolveInner) => {
+        setTimeout(resolveInner, 2000);
+      }),
+    );
+  });
+}
+
 export async function sendEmail(formData: FormData) {
   try {
     const transporter = nodemailer.createTransport({
@@ -18,7 +31,12 @@ export async function sendEmail(formData: FormData) {
       subject: `Mesaj de la ${formData.get("email")}`,
       text: formData.get("message"),
     }; 
-     return await transporter.sendMail(mailOptions);
+    // await delay()
+    
+     
+     await transporter.sendMail(mailOptions);
+     console.log("sss")
+     return
      
   } catch (error) {
     console.error("Error occurred:", error);

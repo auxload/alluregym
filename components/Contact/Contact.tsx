@@ -23,10 +23,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
 import { sendEmail } from "../Galerie/actions/SendEmail";
-import { useState } from "react";
-
+import { useFormStatus } from "react-dom";
+import { useRef } from "react";
+type x = z.infer<typeof formSchema>;
 export function Contact() {
-  const [loading,setLoading]=useState(false)
+  // const [loading,setLoading]=useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,15 +38,12 @@ export function Contact() {
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log("client");
-  }
   return (
-    <Form {...form} >
-      <form action={sendEmail}  className="  grid md:w-[350px] m-auto grid-cols-2 items-start gap-4">
+    <Form {...form}>
+      <form
+        action={sendEmail}
+        className="  grid md:w-[350px] m-auto grid-cols-2 items-start gap-4"
+      >
         <FormField
           control={form.control}
           name="firstName"
@@ -55,9 +53,7 @@ export function Contact() {
               <FormControl>
                 <Input placeholder="" {...field} />
               </FormControl>
-              <FormDescription>
-                Enter your first name
-              </FormDescription>
+              <FormDescription>Enter your first name</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -71,9 +67,7 @@ export function Contact() {
               <FormControl>
                 <Input placeholder="" {...field} />
               </FormControl>
-              <FormDescription>
-                Enter your last name.
-              </FormDescription>
+              <FormDescription>Enter your last name.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -87,9 +81,7 @@ export function Contact() {
               <FormControl>
                 <Input placeholder="" {...field} />
               </FormControl>
-              <FormDescription>
-                Enter your email.
-              </FormDescription>
+              <FormDescription>Enter your email.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -107,8 +99,16 @@ export function Contact() {
             </FormItem>
           )}
         />
-        <Button   className="items-start w-fit" type="submit">Submit</Button>
+        <SubmitButton />
       </form>
     </Form>
+  );
+}
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <Button disabled={pending} type="submit" className=" items-start w-fit">
+      {!pending ? "Submit" : "Loading.."}
+    </Button>
   );
 }
