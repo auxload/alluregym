@@ -25,9 +25,9 @@ import { Textarea } from "../ui/textarea";
 import { sendEmail } from "../Galerie/actions/SendEmail";
 import { useFormStatus } from "react-dom";
 import { useRef } from "react";
+
 type x = z.infer<typeof formSchema>;
 export function Contact() {
-  // const [loading,setLoading]=useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,11 +37,22 @@ export function Contact() {
       message: "",
     },
   });
-
+  async function onSubmit(data: any) {
+    await sendEmail(objectToFormData(data));
+  }
+  function objectToFormData(obj: any) {
+    const formData = new FormData();
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        formData.append(key, obj[key]);
+      }
+    }
+    return formData;
+  }
   return (
     <Form {...form}>
       <form
-        action={sendEmail}
+        onSubmit={form.handleSubmit((data) => onSubmit(data))}
         className="  grid md:w-[350px] m-auto grid-cols-2 items-start gap-4"
       >
         <FormField
@@ -99,16 +110,10 @@ export function Contact() {
             </FormItem>
           )}
         />
-        <SubmitButton />
+        <Button disabled={form.formState.isSubmitting} type="submit" className=" items-start w-fit">
+          {(form.formState.isSubmitting) ? "Loading..." : "Submit"}
+        </Button>
       </form>
     </Form>
-  );
-}
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button disabled={pending} type="submit" className=" items-start w-fit">
-      {!pending ? "Submit" : "Loading.."}
-    </Button>
   );
 }

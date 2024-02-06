@@ -35,7 +35,6 @@ export async function sendEmail(formData: FormData) {
     
      
      await transporter.sendMail(mailOptions);
-     console.log("sss")
      return
      
   } catch (error) {
