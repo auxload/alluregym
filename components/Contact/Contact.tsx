@@ -4,10 +4,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 const formSchema = z.object({
-  firstName: z.string().min(2).max(50),
-  lastName: z.string().min(2).max(50),
-  email: z.string().min(2).max(50),
-  message: z.string().min(2).max(50),
+  firstName: z.string().min(1,"Te rugam sa introduci numele").max(50,"Limita maxima este de 50 de caractere"),
+  lastName: z.string().min(1,"Te rugam sa introduci prenumele").max(50,"Limita maxima este de 50 de caractere"),
+  email: z.string().email("Email-ul nu este valid").min(1,"Te rugam sa introduci o adresa de email").max(50),
+  message: z.string().min(1,"Introdu mesaj aici").max(225),
 });
 
 import { Button } from "@/components/ui/button";
@@ -61,11 +61,11 @@ export function Contact() {
           name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First Name</FormLabel>
+              <FormLabel>Nume</FormLabel>
               <FormControl>
                 <Input placeholder="" {...field} />
               </FormControl>
-              <FormDescription>Enter your first name</FormDescription>
+              <FormDescription>Introdu numele tau</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -75,11 +75,11 @@ export function Contact() {
           name="lastName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Last Name</FormLabel>
+              <FormLabel>Prenume</FormLabel>
               <FormControl>
                 <Input placeholder="" {...field} />
               </FormControl>
-              <FormDescription>Enter your last name.</FormDescription>
+              <FormDescription>Introdu prenumele tau.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -93,7 +93,7 @@ export function Contact() {
               <FormControl>
                 <Input placeholder="" {...field} />
               </FormControl>
-              <FormDescription>Enter your email.</FormDescription>
+              <FormDescription>Introdu o adressa email.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -112,7 +112,7 @@ export function Contact() {
           )}
         />
         <Button disabled={form.formState.isSubmitting} type="submit" className=" items-start w-fit">
-          {(form.formState.isSubmitting) ? "In curs de trimitere..." : "Submit"}
+          {(form.formState.isSubmitting) ? "In curs de trimitere..." : "Trimite"}
         </Button>
       </form>
     </Form>
